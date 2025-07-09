@@ -10,7 +10,12 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
+                    <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
                 </div>
+                <x-card title="Lorem Ipsum is simply!">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt dui eget scelerisque dapibus.
+                    Quisque mattis dignissim cursus. Pellentesque sed arcu ac augue bibendum gravida.
+                </x-card>
             </div>
         </div>
     </div>
