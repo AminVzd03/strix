@@ -7,16 +7,25 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                    <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
-                </div>
-                <x-card title="Lorem Ipsum is simply!">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt dui eget scelerisque dapibus.
-                    Quisque mattis dignissim cursus. Pellentesque sed arcu ac augue bibendum gravida.
-                </x-card>
-            </div>
+            <button class="
+    w-[80%]                /* 80% width */
+    mx-auto                /* Center horizontally */
+    bg-rose-500            /* Rose background */
+    hover:bg-rose-600      /* Darker rose on hover */
+    text-white             /* White text */
+    font-medium            /* Medium font weight */
+    py-3                   /* Vertical padding */
+    px-6                   /* Horizontal padding */
+    rounded-lg             /* Rounded edges */
+    shadow-md              /* Subtle shadow */
+    transition             /* Smooth hover transition */
+    duration-200           /* Transition speed */
+    flex                   /* Flexbox for centering */
+    justify-center         /* Center content horizontally */
+    items-center           /* Center content vertically */
+">
+                Click Me
+            </button>
         </div>
     </div>
 </x-app-layout>
