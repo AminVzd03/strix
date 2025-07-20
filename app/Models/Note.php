@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Note extends Model
 {
-  protected $fillable = ['title','body','user_id','sent_at','is_sent'];
+  protected $fillable = ['title','body','user_id','send_date','is_sent'];
+
+  public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+      return $this->belongsTo(User::class);
+  }
+  public function parents(): \Illuminate\Database\Eloquent\Relations\HasMany {
+
+  }
 }

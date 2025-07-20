@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('title');
             $table->text('body');
             $table->boolean('is_sent')->default(false);
-            $table->timestamp('sent_at')->nullable();
-            $table->foreignId('reply_id')->nullable()->constrained('notes');
+            $table->date('send_date')->nullable();
+            $table->foreignId('parent_id')->nullable()->constrained('notes')->onDelete('cascade');
             $table->timestamps();
         });
     }
