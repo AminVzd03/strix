@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <button class="
+            <a class="
     w-[80%]                /* 80% width */
     mx-auto                /* Center horizontally */
     bg-rose-500            /* Rose background */
@@ -23,9 +23,9 @@
     flex                   /* Flexbox for centering */
     justify-center         /* Center content horizontally */
     items-center           /* Center content vertically */
-">
-                Click Me
-            </button>
+" href="{{route('note.add')}}">
+                Add Notes
+            </a>
         </div>
     </div>
 </x-app-layout>

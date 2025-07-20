@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Livewire\Livewire;
 Route::view('/', 'welcome');
 
 Route::view('dashboard', 'dashboard')
@@ -13,3 +13,7 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 require __DIR__.'/auth.php';
+Route::prefix('note')->middleware(['auth', 'verified'])->name('note.')->group(function () {
+    Route::view('/', 'note');
+    Route::view('/add','notes.create')->name('add');
+});
