@@ -14,19 +14,32 @@ class NoteSeeder extends Seeder
      */
     public function run(): void
     {
-        $notes =[
-            [   'user_id' => 1,
-                'title' => 'Shopping list' ,
+        $notes = [
+            ['user_id' => 1,
+                'title' => 'Shopping list',
                 'body' => 'This is a shopping list',
                 'parent_id' => null,
 
             ],
-            [   'user_id' => 2,
+            ['user_id' => 2,
+                'title' => null,
                 'body' => 'ok will buy them',
+                'parent_id' => 1,
+
+            ],
+            ['user_id' => 3,
+                'title' => null,
+                'body' => 'You always forget these',
+                'parent_id' => 2,
+
+            ],
+            ['user_id' => 3,
+                'title' => null,
+                'body' => "Don't you want milk",
                 'parent_id' => 1,
 
             ]
         ];
-      Note::insert($notes);
+        Note::insert($notes);
     }
 }

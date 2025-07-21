@@ -14,14 +14,20 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = [[
-            'name' => 'Amin Valizade',
-            'email' => 'aminvalizade03@gmail.com',
-            'password' => Hash::make("22446688"),
-        ],
+        $users = [
+            [
+                'name' => 'Amin Valizade',
+                'email' => 'aminvalizade03@gmail.com',
+                'password' => Hash::make("22446688"),
+            ],
             [
                 'name' => 'Travis Scott',
                 'email' => 'travis@gmail.com',
+                'password' => Hash::make("22446688"),
+            ],
+            [
+                'name' => 'Aubry Graham',
+                'email' => 'aubry@gmail.com',
                 'password' => Hash::make("22446688"),
             ]];
         User::insert($users);
