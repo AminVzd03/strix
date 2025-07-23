@@ -21,6 +21,13 @@ class NoteSeeder extends Seeder
                 'parent_id' => null,
 
             ],
+            ['user_id' => 1,
+                'title' => 'Chores',
+                'body' => 'I am about to do a lot of chores',
+                'parent_id' => null,
+
+            ],
+
             ['user_id' => 2,
                 'title' => null,
                 'body' => 'ok will buy them',

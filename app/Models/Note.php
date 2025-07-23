@@ -12,7 +12,4 @@ class Note extends Model
   {
       return $this->belongsTo(User::class);
   }
-  public function parents(): \Illuminate\Database\Eloquent\Relations\HasMany {
-
-  }
 }
