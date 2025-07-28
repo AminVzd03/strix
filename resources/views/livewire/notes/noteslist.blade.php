@@ -6,6 +6,7 @@ $userId = auth()->user()->id;
 state(['notes' => fn() => Note::where('user_id', $userId)->get()]);
 
 
+
 ?>
 <ul class="list bg-base-100 rounded-box shadow-md mx-auto w-[85vw] max-w-[85%] py-4 mt-5">
 
@@ -17,7 +18,7 @@ state(['notes' => fn() => Note::where('user_id', $userId)->get()]);
                 <div><img class="size-10 rounded-box" src="https://img.daisyui.com/images/profile/demo/1@94.webp"/>
                 </div>
                 <div>
-                    <div >{{$note->title}}</div>
+                    <div class="text-rose-300" >{{$note->title}}</div>
                 </div>
                 <p class="list-col-wrap text-xs">
                     {{$note->body}}

@@ -19,12 +19,13 @@ class NoteSeeder extends Seeder
                 'title' => 'Shopping list',
                 'body' => 'This is a shopping list',
                 'parent_id' => null,
-
+                'send_date' => now()->addWeek(),
             ],
             ['user_id' => 1,
                 'title' => 'Chores',
                 'body' => 'I am about to do a lot of chores',
                 'parent_id' => null,
+                'send_date' => now()->addWeek(),
 
             ],
 
