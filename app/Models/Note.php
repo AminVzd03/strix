@@ -12,7 +12,16 @@ class Note extends Model
   {
       return $this->belongsTo(User::class);
   }
-  public function parents(): \Illuminate\Database\Eloquent\Relations\HasMany {
-
+  public function replies(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+      return $this->hasMany(Note::class, 'parent_id');
+  }
+  public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+  {
+      return $this->belongsTo(Note::class, 'parent_id');
+  }
+  public function scopeReplies()
+  {
+      return $this->query()->with('replies');
   }
 }
