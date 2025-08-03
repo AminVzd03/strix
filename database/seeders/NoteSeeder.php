@@ -19,12 +19,14 @@ class NoteSeeder extends Seeder
                 'title' => 'Shopping list',
                 'body' => 'This is a shopping list',
                 'parent_id' => null,
+                'is_sent' => false,
                 'send_date' => now()->addWeek(),
             ],
             ['user_id' => 1,
                 'title' => 'Chores',
                 'body' => 'I am about to do a lot of chores',
                 'parent_id' => null,
+                'is_sent' => false,
                 'send_date' => now()->addWeek(),
 
             ],
@@ -33,18 +35,26 @@ class NoteSeeder extends Seeder
                 'title' => null,
                 'body' => 'ok will buy them',
                 'parent_id' => 1,
+                'is_sent' => true,
+                'send_date' => now(),
 
             ],
             ['user_id' => 3,
                 'title' => null,
                 'body' => 'You always forget these',
                 'parent_id' => 2,
+                'is_sent' => true,
+                'send_date' => now(),
+
 
             ],
             ['user_id' => 3,
                 'title' => null,
                 'body' => "Don't you want milk",
                 'parent_id' => 1,
+                'is_sent' => true,
+                'send_date' => now(),
+
 
             ]
         ];
