@@ -7,6 +7,8 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <link rel="icon" sizes="32x32" href="{{asset('/assets/logos/logo2.png')}}">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -14,7 +16,6 @@
         <!-- Scripts -->
         <tallstackui:script />
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <wireui:scripts />
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     </head>
