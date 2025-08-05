@@ -3,13 +3,14 @@
 use Livewire\Volt\Component;
 
 new class extends Component {
-    public $title, $body, $recipientEmail, $dateTime;
+    public $title, $body, $recipientEmail;
     public $date = '';
     public $time = '';
-    public function parseDateTime() {
-        $dateTime = \Carbon\Carbon::parse("{$this->date} {$this->time}")->format('Y-m-d h:i A');
-    }
 
+    #[\Livewire\Attributes\Computed]
+    public function dateTime() {
+       return  \Carbon\Carbon::parse("{$this->date}{$this->time}");
+    }
 
     public function save()
     {
@@ -24,7 +25,7 @@ new class extends Component {
             'title' => $this->title,
             'body' => $this->body,
             'recipient_email' => $this->recipientEmail,
-            'send_date' => $this->date,
+            'send_date' => $this->dateTime
         ]);
         return redirect()->route('dashboard');
     }
@@ -94,11 +95,6 @@ new class extends Component {
                     @error('time') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
                 </div>
 
-            </div>
-
-            <!-- Preview -->
-            <div class="text-sm text-gray-600 mt-2">
-                <span class="font-medium text-gray-800">Selected Date & Time:</span>
             </div>
 
             <!-- Submit -->
