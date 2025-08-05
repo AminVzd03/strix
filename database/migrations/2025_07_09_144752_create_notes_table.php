@@ -16,9 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('title')->nullable();
             $table->text('body');
+            $table->string('recipient_email')->nullable();
             $table->foreignId('parent_id')->nullable()->constrained('notes')->onDelete('cascade');
             $table->boolean('is_sent')->default(false);
-            $table->date('send_date')->nullable();
+            $table->dateTime('send_date')->nullable();
             $table->timestamps();
         });
     }

@@ -3,95 +3,111 @@
 use Livewire\Volt\Component;
 
 new class extends Component {
-    public string $title ;
-    public string $body ;
-    public $sendDate;
-    public function submit()
-    {
-        info($this->sendDate);
-        auth()
-            ->user()
-            ->notes()
-            ->create([
-                'title' => $this->title,
-                'body' => $this->body,
-                'send_date' => $this->sendDate
-            ]);
-        redirect(route('dashboard'));
+    public $title, $body, $recipientEmail;
+    public $date = '';
+    public $time = '';
 
+    #[\Livewire\Attributes\Computed]
+    public function dateTime() {
+       return  \Carbon\Carbon::parse("{$this->date}{$this->time}");
+    }
+
+    public function save()
+    {
+        $this->validate([
+            'title' => 'required|string',
+            'body' => 'required|string',
+            'recipientEmail' => 'required|string',
+            'date' => 'required|date',
+            'time' => 'required',
+        ]);
+        auth()->user()->notes()->create([
+            'title' => $this->title,
+            'body' => $this->body,
+            'recipient_email' => $this->recipientEmail,
+            'send_date' => $this->dateTime
+        ]);
+        return redirect()->route('dashboard');
     }
 }; ?>
 
-<div>
-    <form class="p-6 space-y-6" wire:submit="submit">
-        <!-- Text Input 1 -->
-        <div class="space-y-2">
-            <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-            <div class="relative">
+<div class="min-h-screen bg-gray-790 flex items-center justify-center px-4 py-10">
+    <div class="w-full max-w-xl bg-rose-500 rounded-2xl shadow-xl p-8 space-y-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Send A Note</h2>
+
+        <form wire:submit="save" class="space-y-6">
+            <!-- Title -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
                 <input
                     wire:model="title"
                     type="text"
-                    name="title"
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 bg-gray-50"
-                    placeholder="Your messages's title"
+                    placeholder="Title"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                 >
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <svg class="h-5 w-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </div>
+                @error('title') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
             </div>
-        </div>
 
-        <!-- Text Input 2 -->
-        <div class="space-y-2">
-            <label for="body" class="block text-sm font-medium text-gray-700">Message</label>
-            <div class="relative">
+            <!-- Body -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Body</label>
                 <input
                     wire:model="body"
                     type="text"
-                    name="body"
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 bg-gray-50"
-                    placeholder="Your message"
+                    placeholder="Enter body"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                 >
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <svg class="h-5 w-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                </div>
+                @error('body') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
             </div>
-        </div>
 
-        <!-- Date Picker -->
-        <div class="space-y-2">
-            <label for="sendDate" class="block text-sm font-medium text-gray-700">Send Date</label>
-            <div class="relative">
+            <!-- Recipient's email -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Recipient's Email</label>
                 <input
-                    wire:model="sendDate"
-                    type="date"
-                    id="birthdate"
-                    name="sendDate"
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 bg-gray-50 appearance-none"
+                    wire:model="recipientEmail"
+                    type="text"
+                    placeholder="example@email.com"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                 >
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <svg class="h-5 w-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                </div>
+                @error('recipientEmail') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
             </div>
-        </div>
 
-        <!-- Submit Button -->
-        <div class="pt-4">
-            <button
+            <!-- Date Picker -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                <input
+                    type="date"
+                    wire:model="date"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                >
+                @error('date') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+            </div>
 
-                type="submit"
-                class="w-full bg-gradient-to-r from-rose-500 to-rose-400 hover:from-rose-600 hover:to-rose-500 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-opacity-50"
-            >
-                Submit
-                <span class="ml-2">→</span>
-            </button>
-        </div>
-    </form>
+            <!-- Time + AM/PM -->
+            <div class="flex flex-col md:flex-row md:items-end gap-4">
+                <div class="flex-1">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Time</label>
+                    <input
+                        type="time"
+                        wire:model="time"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                    >
+                    @error('time') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+                </div>
 
+            </div>
+
+            <!-- Submit -->
+            <div class="pt-4">
+                <button
+                    type="submit"
+                    class="w-full py-3 px-6 bg-rose-600 hover:bg-rose-700 text-white font-medium rounded-xl shadow-md transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                >
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+
+

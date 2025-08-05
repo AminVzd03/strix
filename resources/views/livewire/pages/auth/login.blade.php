@@ -66,6 +66,9 @@ new #[Layout('layouts.guest')] class extends Component
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
+            <a href="{{route('register')}}"><x-secondary-button class="ms-3">
+                    {{ __('New user ? Click me ') }}
+                </x-secondary-button></a>
         </div>
     </form>
 </div>
