@@ -1,7 +1,7 @@
 <?php
 
 use Livewire\Volt\Component;
-
+use \App\Events\NoteCreated;
 new class extends Component {
     public $title, $body, $recipientEmail;
     public $date = '';
@@ -34,17 +34,7 @@ new class extends Component {
             'recipient_email' => $this->recipientEmail,
             'send_date' => $this->dateTime
         ]);
-        if($this->sendNow) {
-            $resend = Resend::client('re_PdWpJFX5_3abjYnwMxW6pfEXD4EkUHQ7U');
-
-            $resend->emails->send([
-                'from' => 'strix@aminvalizade.ir',
-                'to' => $this->recipientEmail,
-                'subject' => $this->title,
-                'html' => $this->body
-            ]);
-        }
-
+         \App\Events\NoteCreated::dispatch();
         return redirect()->route('dashboard');
     }
 }; ?>
