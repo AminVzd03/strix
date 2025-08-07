@@ -6,20 +6,27 @@ new class extends Component {
     public $title, $body, $recipientEmail;
     public $date = '';
     public $time = '';
+    public bool $sendNow = false;
 
     #[\Livewire\Attributes\Computed]
-    public function dateTime() {
-       return  \Carbon\Carbon::parse("{$this->date}{$this->time}");
+    public function dateTime()
+    {
+        if(!$this->sendNow) {
+            return \Carbon\Carbon::parse("{$this->date}{$this->time}");
+        }
+        return \Carbon\Carbon::now();
+
     }
 
     public function save()
     {
+
         $this->validate([
             'title' => 'required|string',
             'body' => 'required|string',
             'recipientEmail' => 'required|string',
-            'date' => 'required|date',
-            'time' => 'required',
+            'date' => 'date',
+
         ]);
         auth()->user()->notes()->create([
             'title' => $this->title,
@@ -27,11 +34,23 @@ new class extends Component {
             'recipient_email' => $this->recipientEmail,
             'send_date' => $this->dateTime
         ]);
+        if($this->sendNow) {
+            $resend = Resend::client('re_PdWpJFX5_3abjYnwMxW6pfEXD4EkUHQ7U');
+
+            $resend->emails->send([
+                'from' => 'strix@aminvalizade.ir',
+                'to' => $this->recipientEmail,
+                'subject' => $this->title,
+                'html' => $this->body
+            ]);
+        }
+
         return redirect()->route('dashboard');
     }
 }; ?>
 
 <div class="min-h-screen bg-gray-790 flex items-center justify-center px-4 py-10">
+
     <div class="w-full max-w-xl bg-rose-500 rounded-2xl shadow-xl p-8 space-y-6">
         <h2 class="text-2xl font-semibold text-gray-800">Send A Note</h2>
 
@@ -71,6 +90,10 @@ new class extends Component {
                 >
                 @error('recipientEmail') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
             </div>
+            <div>
+                <label for="sendNow">Send Now ? </label>
+                <input type="checkbox" name="sendNow" wire:model="sendNow">
+            </div>
 
             <!-- Date Picker -->
             <div>
@@ -83,7 +106,7 @@ new class extends Component {
                 @error('date') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <!-- Time + AM/PM -->
+            <!-- Time -->
             <div class="flex flex-col md:flex-row md:items-end gap-4">
                 <div class="flex-1">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Time</label>
