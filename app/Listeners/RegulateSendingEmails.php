@@ -21,6 +21,8 @@ class RegulateSendingEmails
      */
     public function handle(NoteCreated $event): void
     {
+            if($event->note['send_date']== null) {
 
+            }
     }
 }

@@ -14,8 +14,7 @@ new class extends Component {
         if(!$this->sendNow) {
             return \Carbon\Carbon::parse("{$this->date}{$this->time}");
         }
-        return \Carbon\Carbon::now();
-
+        return null;
     }
 
     public function save()
@@ -28,13 +27,14 @@ new class extends Component {
             'date' => 'date',
 
         ]);
-        auth()->user()->notes()->create([
+        $note = [
             'title' => $this->title,
             'body' => $this->body,
             'recipient_email' => $this->recipientEmail,
-            'send_date' => $this->dateTime
-        ]);
-         \App\Events\NoteCreated::dispatch();
+            'send_date' => $this->dateTime ] ;
+
+        auth()->user()->notes()->create($note);
+         \App\Events\NoteCreated::dispatch($note);
         return redirect()->route('dashboard');
     }
 }; ?>

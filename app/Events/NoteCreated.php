@@ -14,12 +14,13 @@ class NoteCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Create a new event instance.
-     */
-    public function __construct()
+    public $user;
+    public $note;
+
+    public function __construct($note)
     {
-        //
+        $this->note = $note;
+        $this->user = auth()->user();
     }
 
     /**
