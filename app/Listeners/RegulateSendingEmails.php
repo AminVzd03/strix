@@ -23,8 +23,8 @@ class RegulateSendingEmails
     public function handle(NoteCreated $event): void
     {
             if($event->note['send_date']== null) {
-             //  Mail::to($event->recipientEmail)->send()
-                info([$event]);
+               Mail::to($event->note['recipientEmail'])->send();
+
             }
     }
 }
