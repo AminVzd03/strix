@@ -34,7 +34,7 @@ new class extends Component {
             'send_date' => $this->dateTime ] ;
 
         auth()->user()->notes()->create($note);
-         \App\Events\NoteCreated::dispatch($note);
+//         \App\Events\NoteCreated::dispatch($note);
         return redirect()->route('dashboard');
     }
 }; ?>

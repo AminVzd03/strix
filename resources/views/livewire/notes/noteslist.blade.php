@@ -2,10 +2,16 @@
 
 use App\Models\Note;
 use function Livewire\Volt\{state};
+protected $listeners = ['noteDeleted' => 'refreshNotes'];
+
 
 $userId = auth()->user()->id;
 state(['notes' => fn() => Note::where('user_id', $userId)->get()]);
-
+public function refreshNotes()
+{
+    // reload notes from DB
+    $this->notes = Note::latest()->get();
+}
 
 ?>
 <ul class="list bg-base-100 rounded-box shadow-md mx-auto w-[85vw] max-w-[85%] py-4 mt-5">
@@ -45,8 +51,7 @@ state(['notes' => fn() => Note::where('user_id', $userId)->get()]);
                         </g>
                     </svg>
                 </button>
-                <livewire:notes.delete-note/>
-                <x-monoicon-delete class="text-white-300"/>
+                <livewire:notes.delete-note :id="$note->id"/>
 
             </li>
 
