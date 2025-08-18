@@ -2,9 +2,9 @@
 
 use App\Models\Note;
 use function Livewire\Volt\{state};
+
 $userId = auth()->user()->id;
 state(['notes' => fn() => Note::where('user_id', $userId)->get()]);
-
 
 
 ?>
@@ -18,7 +18,7 @@ state(['notes' => fn() => Note::where('user_id', $userId)->get()]);
                 <div><img class="size-10 rounded-box" src="https://img.daisyui.com/images/profile/demo/1@94.webp"/>
                 </div>
                 <div>
-                    <div class="text-rose-300" >{{$note->title}}</div>
+                    <div class="text-rose-300">{{$note->title}}</div>
                 </div>
                 <p class="list-col-wrap text-xs">
                     {{$note->body}}
@@ -45,6 +45,9 @@ state(['notes' => fn() => Note::where('user_id', $userId)->get()]);
                         </g>
                     </svg>
                 </button>
+                <a href="{{route('note.delete',$note->id)}}" class="btn btn-square btn-ghost">
+                    <x-monoicon-delete class="w-5 text-white"/>
+                </a>
 
             </li>
 

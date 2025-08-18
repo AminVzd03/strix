@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Note;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -17,7 +18,7 @@ class SendNoteMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($note)
     {
         $this->note = $note;
     }
@@ -28,7 +29,8 @@ class SendNoteMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->note->title,
+            to: $this->note['recipient_email'],
+            subject: $this->note['title']
         );
     }
 
@@ -38,7 +40,7 @@ class SendNoteMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view('sendNoteLayout'),
+            view('sendNoteLayout', ['note' => $this->note]),
 
         );
     }
