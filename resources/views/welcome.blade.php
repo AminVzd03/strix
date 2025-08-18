@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" sizes="32x32" href="{{asset('/assets/logos/logo2.png')}}">
     <title>Strix | Welcome</title>
-    <x-monoicon-delete class="text-red-100"/>
+    <x-monoicon-delete class="text-white" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes gradientShift {
