@@ -7,15 +7,14 @@ new class extends Component {
     public function deleteNote(): void
     {
         \App\Models\Note::destroy($this->id);
-        info($this->id);
+        dispatch('note-deleted');
 
     }
 
 }; ?>
 <div x-data="{open : false}">
     <a @click="open = true">
-{{--        <x-monoicon-delete @click="open = true" class="text-white-300 flex justify-center w-5"/>--}}
-        just click this
+        <x-monoicon-delete @click="open = true" class="text-white-300 flex justify-center w-5"/>
     </a>
     <div
         x-show="open"
