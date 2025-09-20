@@ -3,10 +3,10 @@
 use Livewire\Volt\Component;
 
 new class extends Component {
-    public $id;
-    public function deleteNote(): void
+    public $noteId;
+    public function deleteNote($noteId): void
     {
-        \App\Models\Note::destroy($this->id);
+        \App\Models\Note::destroy($noteId);
         dispatch('note-deleted');
 
     }
@@ -39,7 +39,7 @@ new class extends Component {
 
                 <!-- Delete Button -->
                 <button
-                    wire:click="deleteNote"
+                    wire:click="deleteNote{{ $noteId }}"
                     @click="open = false"
                     class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition shadow"
                 >

@@ -2,6 +2,7 @@
 
 use App\Models\Note;
 use Livewire\Attributes\On;
+use Carbon\Carbon;
 use function \Livewire\Volt\{state};
 use function \Livewire\Volt\{mount};
 use function \Livewire\Volt\{on};
@@ -12,50 +13,68 @@ mount(function() {
     $this->notes = Note::where('user_id',$this->userId)->get();
 });
 
-on('note-deleted',function () {
-    $this->notes = Note::where('user_id',$this->userId)->get();
-});
+function formatDate($dateString)
+{
+    $date = Carbon::parse($dateString);
+    $now = Carbon::now();
+
+    if ($date->isFuture()) {
+        return "Will be sent in ".$now->diffForHumans($date, [
+            'syntax' => Carbon::DIFF_ABSOLUTE,
+            'parts' => 1,
+            'options' => Carbon::NO_ZERO_DIFF
+        ]);
+    }
+
+    // For past dates, use the previous formatting
+    return "Is sent on  ".$date->format('l M jS \a\t g a');
+}
+
 ?>
+
 <div>
     <ul class="list bg-base-100 rounded-box shadow-md mx-auto w-[85vw] max-w-[85%] py-4 mt-5">
 
         <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Your Notes</li>
         <div>
             @foreach($notes as $note)
-                <li class="list-row">
-                    <div><img class="size-10 rounded-box" src="https://img.daisyui.com/images/profile/demo/1@94.webp"/>
-                    </div>
-                    <div>
-                        <div class="text-rose-300">{{$note->title}}</div>
-                    </div>
-                    <p class="list-col-wrap text-xs">
-                        {{$note->body}}
-                    </p>
-                    @if($note->is_sent == 0)
-                        <p class="text-red-500">Will be sent on : {{$note->send_date}}</p>
-                    @else
-                        <p class="text-green-700">Message is sent</p>
-                    @endif
-                    <button class="btn btn-square btn-ghost">
-                        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none"
-                               stroke="currentColor">
-                                <path d="M6 3L20 12 6 21 6 3z"></path>
-                            </g>
-                        </svg>
-                    </button>
-                    <button class="btn btn-square btn-ghost">
-                        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none"
-                               stroke="currentColor">
-                                <path
-                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-                            </g>
-                        </svg>
-                    </button>
-                    <livewire:notes.delete-note :id="$note->id"/>
 
-                </li>
+                <div class="w-[80%] max-w-4xl mx-auto mb-4">
+                    <!-- Message Card -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl border border-gray-200">
+                        <!-- Card Header -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-5 border-b border-gray-200">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 sm:mb-0">{{$note->title}}</h3>
+                            <div class="flex space-x-3">
+                                <!-- Edit Icon -->
+                                <button class="text-blue-500 hover:text-blue-700 transition-colors p-2 rounded-full hover:bg-blue-50 flex items-center">
+                                    <i class="fas fa-pencil-alt mr-2"></i>
+                                    <span class="text-sm">Edit</span>
+                                </button>
+                                <!-- Delete Icon -->
+                                <button class="text-red-500 hover:text-red-700 transition-colors p-2 rounded-full hover:bg-red-50 flex items-center">
+                                    <i class="fas fa-trash mr-2"></i>
+                                    <span class="text-sm">Delete</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-6">
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                            {{$note->body}}
+                            </p>
+
+                            <!-- Date with Checkmark -->
+                            <div class="flex items-center text-gray-600 bg-gray-50 rounded-lg p-4 border border-gray-100">
+                                <i class="fas fa-check-circle text-green-500 text-lg mr-3"></i>
+                                <span class="font-medium">{{formatDate($note->send_date)}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
 
             @endforeach
         </div>
@@ -63,5 +82,3 @@ on('note-deleted',function () {
 
     </ul>
 </div>
-
-
