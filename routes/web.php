@@ -18,3 +18,4 @@ Route::prefix('note')->middleware(['auth', 'verified'])->name('note.')->group(fu
     Route::view('/add','notes.create')->name('add');
     Route::view('/{note}/edit','notes.edit')->name('edit');
 });
+//Route::resource('notes')

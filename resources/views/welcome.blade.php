@@ -16,23 +16,34 @@
             }
         }
 
-        .vibrant-bg {
-            background: linear-gradient(270deg, #ff0055, #ff66cc, #000000);
-            background-size: 600% 600%;
-            animation: gradientShift 12s ease infinite;
+
+        body {
+            background-image: url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: -1;
         }
     </style>
 </head>
-<body class="h-screen w-screen vibrant-bg flex flex-col justify-between items-center text-white font-sans overflow-hidden">
-
-<!-- Title -->
-<div class="mt-24 text-center">
-    <h1 class="text-4xl md:text-6xl font-bold tracking-wide drop-shadow-lg">
+<body class="h-screen w-screen flex flex-col justify-between items-center text-white font-sans overflow-hidden">
+<div class="mt-10 ml-10">
+    <h2 class="text-4xl md:text-6xl font-bold tracking-wide madrigal-font text-shade text-amber-200">
         Share notes with everyone !
-    </h1>
+    </h2>
 </div>
-
-<!-- Button -->
 <div class="mb-80">
     <a href="{{route('login')}}" class="px-10 py-4 text-lg md:text-xl font-semibold bg-rose-500 text-black rounded-full shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out">
         Get Started

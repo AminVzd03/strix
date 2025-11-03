@@ -39,35 +39,40 @@
                 >
                 @error('recipientEmail') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
             </div>
-            <div>
-                <label for="sendNow">Send Now ? </label>
-                <input type="checkbox" name="sendNow" wire:model="sendNow">
-            </div>
-
-            <!-- Date Picker -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                <input
-                    type="date"
-                    wire:model="date"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                >
-                @error('date') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <!-- Time -->
-            <div class="flex flex-col md:flex-row md:items-end gap-4">
-                <div class="flex-1">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Time</label>
+            <div x-data="{selectedOption: @entangle('selectedOption')}">
+                <label for="sendNow">Send Now </label>
+                <input type="radio" id="sendNow" name="sendTime" x-model="selectedOption" value="sendNow" wire:model="sendNow">
+                &nbsp;
+                <label for="sendLater">Send Later </label>
+                <input type="radio" id="sendLater" name="sendTime" x-model="selectedOption" value="sendLater" wire:model="sendLater">
+                <div x-show="selectedOption == 'sendLater'">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
                     <input
-                        type="time"
-                        wire:model="time"
+                        type="date"
+                        wire:model="date"
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                     >
-                    @error('time') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+                    @error('date') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
                 </div>
 
+                <div class="flex flex-col md:flex-row md:items-end gap-4" x-show="selectedOption == 'sendLater'">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Time</label>
+                        <input
+                            type="time"
+                            wire:model="time"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                        >
+                        @error('time') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                </div>
             </div>
+
+
+
+            <!-- Time -->
+
 
             <!-- Submit -->
             <div class="pt-4">
