@@ -39,13 +39,15 @@
                 >
                 @error('recipientEmail') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
             </div>
-            <div x-data="{selectedOption: @entangle('selectedOption')}">
+            <div x-data="{sendNowSelected: @entangle('sendNowSelected')}">
                 <label for="sendNow">Send Now </label>
-                <input type="radio" id="sendNow" name="sendTime" x-model="selectedOption" value="sendNow" wire:model="sendNow">
+                <input type="radio" id="sendNow" name="sendTime" x-model="sendNowSelected" value="ture"
+                       wire:model="sendNow">
                 &nbsp;
                 <label for="sendLater">Send Later </label>
-                <input type="radio" id="sendLater" name="sendTime" x-model="selectedOption" value="sendLater" wire:model="sendLater">
-                <div x-show="selectedOption == 'sendLater'">
+                <input type="radio" id="sendLater" name="sendTime" x-model="sendNowSelected" value="false"
+                       wire:model="sendNow">
+                <div x-show="sendNowSelected == 'false'">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
                     <input
                         type="date"
@@ -55,7 +57,7 @@
                     @error('date') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                <div class="flex flex-col md:flex-row md:items-end gap-4" x-show="selectedOption == 'sendLater'">
+                <div class="flex flex-col md:flex-row md:items-end gap-4" x-show="sendNowSelected == 'false'">
                     <div class="flex-1">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Time</label>
                         <input
@@ -68,11 +70,6 @@
 
                 </div>
             </div>
-
-
-
-            <!-- Time -->
-
 
             <!-- Submit -->
             <div class="pt-4">

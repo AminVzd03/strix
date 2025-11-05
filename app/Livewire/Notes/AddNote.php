@@ -2,35 +2,35 @@
 
 namespace App\Livewire\Notes;
 
+use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 
 class AddNote extends Component
 {
 
 
-    public $title, $body, $recipientEmail;
-    public $date = '';
-    public $time = '';
+    public $title, $body, $recipientEmail, $date, $time;
+    public $dateTime = '';
+
     public bool $sendNow = false;
 
-    #[\Livewire\Attributes\Computed]
-    public function dateTime()
+    public function dateTime(): ?Carbon
     {
         if(!$this->sendNow) {
-            return \Carbon\Carbon::parse("{$this->date}{$this->time}");
+            return $this->dateTime = Carbon::parse("{$this->date}{$this->time}");
         }
         return null;
     }
 
-    public function save()
+    public function save(): RedirectResponse
     {
+        info($this->dateTime);
 
-        $this->validate([
+       $this->validate([
             'title' => 'required|string',
             'body' => 'required|string',
             'recipientEmail' => 'required|string',
-            'date' => 'date',
-
         ]);
         $note = [
             'title' => $this->title,
@@ -40,7 +40,7 @@ class AddNote extends Component
 
         auth()->user()->notes()->create($note);
         return redirect()->route('dashboard');
-    }
+  }
     public function render()
     {
         return view('livewire.notes.add-note');
