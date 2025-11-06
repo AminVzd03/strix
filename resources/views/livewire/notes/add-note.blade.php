@@ -41,13 +41,13 @@
             </div>
             <div x-data="{sendNowSelected: @entangle('sendNowSelected')}">
                 <label for="sendNow">Send Now </label>
-                <input type="radio" id="sendNow" name="sendTime" x-model="sendNowSelected" value="ture"
+                <input type="radio" id="sendNow" name="sendTime" x-model="sendNowSelected"  value="1"
                        wire:model="sendNow">
                 &nbsp;
                 <label for="sendLater">Send Later </label>
-                <input type="radio" id="sendLater" name="sendTime" x-model="sendNowSelected" value="false"
+                <input type="radio" id="sendLater" name="sendTime" x-model="sendNowSelected"  value="0"
                        wire:model="sendNow">
-                <div x-show="sendNowSelected == 'false'">
+                <div x-show="sendNowSelected == '0'">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
                     <input
                         type="date"
@@ -57,7 +57,7 @@
                     @error('date') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                <div class="flex flex-col md:flex-row md:items-end gap-4" x-show="sendNowSelected == 'false'">
+                <div class="flex flex-col md:flex-row md:items-end gap-4" x-show="sendNowSelected == '0'">
                     <div class="flex-1">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Time</label>
                         <input

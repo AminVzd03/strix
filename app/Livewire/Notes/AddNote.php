@@ -11,21 +11,23 @@ class AddNote extends Component
 
 
     public $title, $body, $recipientEmail, $date, $time;
-    public $dateTime = '';
 
     public bool $sendNow = false;
 
-    public function dateTime(): ?Carbon
+    public function sendDate(): ?Carbon
     {
         if(!$this->sendNow) {
-            return $this->dateTime = Carbon::parse("{$this->date}{$this->time}");
+            return  Carbon::parse("{$this->date} {$this->time}");
         }
-        return null;
+        else{
+            return now();
+        }
     }
 
-    public function save(): RedirectResponse
+
+
+public function save()
     {
-        info($this->dateTime);
 
        $this->validate([
             'title' => 'required|string',
@@ -36,7 +38,8 @@ class AddNote extends Component
             'title' => $this->title,
             'body' => $this->body,
             'recipient_email' => $this->recipientEmail,
-            'send_date' => $this->dateTime ] ;
+            'send_date' => $this->sendDate(),
+        ] ;
 
         auth()->user()->notes()->create($note);
         return redirect()->route('dashboard');
