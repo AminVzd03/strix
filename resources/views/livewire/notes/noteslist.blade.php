@@ -41,7 +41,9 @@ function formatDate($dateString)
 
                 <div class="w-[80%] max-w-4xl mx-auto mb-4">
                     <!-- Message Card -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl border border-gray-200">
+                    <div
+                        x-data="{open: false}"
+                        class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl border border-gray-200">
                         <!-- Card Header -->
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-5 border-b border-gray-200">
                             <h3 class="text-xl font-bold text-gray-800 mb-3 sm:mb-0">{{$note->title}}</h3>
@@ -52,10 +54,16 @@ function formatDate($dateString)
                                     <span class="text-sm">Edit</span>
                                 </button>
                                 <!-- Delete Icon -->
-                                <button class="text-red-500 hover:text-red-700 transition-colors p-2 rounded-full hover:bg-red-50 flex items-center">
+                                <button
+                                    x-on:click="open = ! open"
+                                    class="text-red-500 hover:text-red-700 transition-colors p-2 rounded-full hover:bg-red-50 flex items-center">
                                     <i class="fas fa-trash mr-2"></i>
-                                    <span class="text-sm">Delete</span>
+                                    <span class="text-sm" href="">Delete</span>
                                 </button>
+                                <div
+                                    x-show="open" x-transition>
+                                    <livewire:delete-note :noteId="$note->id" :noteTitle="$note->title"/>
+                                </div>
                             </div>
                         </div>
 
