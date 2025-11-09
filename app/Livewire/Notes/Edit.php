@@ -6,6 +6,10 @@ use Livewire\Component;
 
 class Edit extends Component
 {
+    public function editNote($noteId) {
+        $validatedData = $this->validate([
+            'note' => 'required',]);
+    }
 
     public function render()
     {
