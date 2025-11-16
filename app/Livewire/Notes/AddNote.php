@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Notes;
 
+use App\Http\Requests\AddNoteFormReq;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
@@ -10,10 +11,14 @@ class AddNote extends Component
 {
 
 
-    public $title, $body, $recipientEmail, $date, $time;
+    public $title, $body, $recipientEmail, $date, $time, $dateTime;
 
     public bool $sendNow = false;
 
+    public function mount(): void
+    {
+        $this->dateTime = $this->sendDate();
+    }
     public function sendDate(): ?Carbon
     {
         if(!$this->sendNow) {
@@ -25,20 +30,16 @@ class AddNote extends Component
     }
 
 
+public function save(AddNoteFormReq $req): RedirectResponse
+{
+        $req->validationResolved($this->dateTime);
 
-public function save()
-    {
 
-       $this->validate([
-            'title' => 'required|string',
-            'body' => 'required|string',
-            'recipientEmail' => 'required|string',
-        ]);
         $note = [
             'title' => $this->title,
             'body' => $this->body,
             'recipient_email' => $this->recipientEmail,
-            'send_date' => $this->sendDate(),
+            'send_date' => $this->dateTime,
         ] ;
 
         auth()->user()->notes()->create($note);

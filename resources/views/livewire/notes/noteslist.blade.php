@@ -62,7 +62,7 @@ function formatDate($dateString)
                                 </button>
                                 <div
                                     x-show="open" x-transition>
-                                    <livewire:delete-note :noteId="$note->id" :noteTitle="$note->title"/>
+                                    <livewire:notes.delete-note :noteId="$note->id" :noteTitle="$note->title"/>
                                 </div>
                             </div>
                         </div>
