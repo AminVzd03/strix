@@ -13,7 +13,10 @@
                     placeholder="Title"
                     class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                 >
-                @error('title') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+                <div class="bg-white" >
+                    @error('title') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+                </div>
+
             </div>
 
             <!-- Body -->
@@ -25,7 +28,10 @@
                     placeholder="Enter body"
                     class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                 >
-                @error('body') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+                <div class="bg-white" >
+                    @error('body') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+                </div>
+
             </div>
 
             <!-- Recipient's email -->
@@ -37,7 +43,10 @@
                     placeholder="example@email.com"
                     class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                 >
-                @error('recipientEmail') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+                <div class="bg-white" >
+                    @error('recipientEmail') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+                </div>
+
             </div>
             <div x-data="{sendNowSelected: @entangle('sendNowSelected')}">
                 <label for="sendNow">Send Now </label>
@@ -54,7 +63,9 @@
                         wire:model="date"
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-500 text-gray-800 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                     >
-                    @error('date') <p class="text-sm text-rose-600 mt-1">{{ $message }}</p> @enderror
+                    <div class="bg-white" >
+                        @error('dateTime') <p class="text-sm text-accent text-rose-600 mt-1">{{ $message }}</p> @enderror
+                    </div>
                 </div>
 
                 <div class="flex flex-col md:flex-row md:items-end gap-4" x-show="sendNowSelected == '0'">

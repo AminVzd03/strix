@@ -29,23 +29,21 @@ class AddNote extends Component
         }
     }
 
+    public function save(): RedirectResponse
+    {
+        $form = new AddNoteFormReq;
 
-public function save(AddNoteFormReq $req): RedirectResponse
-{
-        $req->validationResolved($this->dateTime);
+        $validated = $this->validate(
+            $form->rules(),
+            $form->messages(),
+            $form->attributes()
+        );
 
+        auth()->user()->notes()->create($validated);
 
-        $note = [
-            'title' => $this->title,
-            'body' => $this->body,
-            'recipient_email' => $this->recipientEmail,
-            'send_date' => $this->dateTime,
-        ] ;
-
-        auth()->user()->notes()->create($note);
         return redirect()->route('dashboard');
-  }
-    public function render()
+    }
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.notes.add-note');
     }
